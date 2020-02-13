@@ -2,6 +2,9 @@ package com.in28minutes.rest.webservices.restfulwebservices.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
@@ -23,14 +26,14 @@ public class SwaggerConfig {
                     "", new ArrayList());
     private static final Set<String> DEFAULT_PRODUCES_AND_CONSUMES = new HashSet<>(Arrays.asList("application/json","application/xml"));
 
-    @Bean
+   /* @Bean
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(DEFAULT_API_INFO)
                 .produces(DEFAULT_PRODUCES_AND_CONSUMES)
                 .consumes(DEFAULT_PRODUCES_AND_CONSUMES);
-    }
-   /* @Bean
+    }*/
+    @Bean
     public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
@@ -38,5 +41,4 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
-*/
 }
