@@ -35,7 +35,7 @@ public class SwaggerConfig {
     }*/
     @Bean
     public Docket api(){
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.SWAGGER_2).apiInfo(DEFAULT_API_INFO)
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(PathSelectors.any())
