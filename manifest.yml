@@ -1,0 +1,12 @@
+applications:
+- name: userservicing
+  disk_quota: 1G
+  instances: 1
+  memory: 1G
+  path: target/restful-web-services-0.0.1-SNAPSHOT.jar
+  timeout: 90
+  routes:
+  - route: userservicing.cfapps.io
+  buildpacks:
+  - https://github.com/cloudfoundry/java-buildpack
+  stack: cflinuxfs3
