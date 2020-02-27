@@ -3,13 +3,19 @@ package com.in28minutes.rest.webservices.restfulwebservices.user;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
 @ApiModel(description = "all details about users.")
+@Entity
 public class User {
 
+    @Id
+    @GeneratedValue
     private Integer id;
 @ApiModelProperty(notes = "Name should be at least 2 char.")
     @Size(min = 2, message = "Name should at least 2 char ")

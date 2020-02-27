@@ -8,9 +8,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.nio.file.attribute.UserPrincipalNotFoundException;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class UserResource {
@@ -18,11 +17,14 @@ public class UserResource {
     @Autowired
     private UserDaoService userDaoService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     //GET /users
     //Retrieve all the users
     @GetMapping("/users")
     public List<User> retrieveAllUsers() {
-        return userDaoService.findAll();
+        return userRepository.findAll();
     }
 
     //GET /user
@@ -30,18 +32,18 @@ public class UserResource {
     @GetMapping("/users/{id}")
     public User retrieveUser(@PathVariable int id) {
 
-        User user = userDaoService.findOne(id);
-        if(user == null) {
+        Optional<User> user = userRepository.findById(id);
+        if(!user.isPresent()) {
             throw new UserNotFoundException("id-"+id);
         }
-        return user;
+        return user.get();
     }
 
     //input - details of user
     // output - CREATED and return the created uri
     @PostMapping("/users")
     public ResponseEntity<Object> createdUser(@Valid @RequestBody User user) {
-        User savedUser = userDaoService.save(user);
+        User savedUser = userRepository.save(user);
         //CREATED
         // /users/{id}  savedUser.getId()
         URI location = ServletUriComponentsBuilder
@@ -52,10 +54,11 @@ public class UserResource {
     }
     @DeleteMapping("/users/{id}")
     public void deleteUser(@PathVariable int id) {
-        User user = userDaoService.deleteById(id);
+        userRepository.deleteById(id);
+        /*User user = userDaoService.deleteById(id);
         if(user == null) {
             throw new UserNotFoundException("id-"+id);
-        }
+        }*/
     }
 
 }
